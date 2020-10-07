@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.job.mapper.Job_JmrJobMapper">
+    
+    <resultMap type="Job_JmrJob" id="JmrJobResult">
+        <result property="jId"    column="j_id"    />
+        <result property="jPoId"    column="j_po_id"    />
+        <result property="jSex"    column="j_sex"    />
+        <result property="jEHistory"    column="j_e_history"    />
+        <result property="jCLevel"    column="j_c_level"    />
+        <result property="jFLanguage"    column="j_f_language"    />
+        <result property="jPrId"    column="j_pr_id"    />
+        <result property="jSRange"    column="j_s_range"    />
+        <result property="jECity"    column="j_e_city"    />
+        <result property="jPRequire"    column="j_p_require"    />
+        <result property="jWelfare"    column="j_welfare"    />
+        <result property="jNeedNumber"    column="j_need_number"    />
+        <result property="jRemark"    column="j_remark"    />
+        <result property="jBegin"    column="j_begin"    />
+        <result property="jExpire"    column="j_expire"    />
+        <result property="jCId"    column="j_c_id"    />
+        <association property="jobJmrPosition" javaType="Job_jmrposition">
+            <id property="pId" column="p_id"/>
+            <result property="pName" column="p_name"/>
+        </association>
+        <association property="jobJmrProfession" javaType="Job_jmrprofession">
+            <id property="pId" column="p_id"/>
+            <result property="pMClass" column="p_m_class"/>
+            <result property="pSClass" column="p_s_class"/>
+        </association>
+
+    </resultMap>
+
+    <sql id="selectJmrJobVo">
+        select m.j_id, m.j_po_id, m.j_sex, m.j_e_history, m.j_c_level, m.j_f_language, m.j_pr_id, m.j_s_range, m.j_e_city, m.j_p_require, m.j_welfare, m.j_need_number, m.j_remark, m.j_begin, m.j_expire, m.j_c_id, p.p_id, p.p_name, o.p_id, o.p_m_class, o.p_s_class from (jmr_job m join jmr_position p on m.j_po_id=p.p_id) join jmr_profession o on m.j_pr_id=o.p_id
+    </sql>
+
+    <select id="selectJmrJobList" parameterType="Job_JmrJob" resultMap="JmrJobResult">
+        <include refid="selectJmrJobVo"/>
+        <where>  
+            <if test="jPoId != null "> and m.j_po_id = #{jPoId}</if>
+            <if test="jSex != null "> and m.j_sex = #{jSex}</if>
+            <if test="jEHistory != null "> and m.j_e_history = #{jEHistory}</if>
+            <if test="jCLevel != null "> and m.j_c_level = #{jCLevel}</if>
+            <if test="jFLanguage != null "> and m.j_f_language = #{jFLanguage}</if>
+            <if test="jPrId != null "> and m.j_pr_id = #{jPrId}</if>
+            <if test="jSRange != null "> and m.j_s_range = #{jSRange}</if>
+            <if test="jECity != null "> and m.j_e_city = #{jECity}</if>
+            <if test="jPRequire != null  and jPRequire != ''"> and m.j_p_require like concat('%', #{jPRequire}, '%')</if>
+            <if test="jWelfare != null  and jWelfare != ''"> and m.j_welfare like concat('%', #{jWelfare}, '%')</if>
+            <if test="jNeedNumber != null "> and m.j_need_number = #{jNeedNumber}</if>
+            <if test="jRemark != null  and jRemark != ''"> and m.j_remark = #{jRemark}</if>
+            <if test="jBegin != null "> and m.j_begin = #{jBegin}</if>
+            <if test="jExpire != null "> and m.j_expire >= #{jExpire}</if>
+            <if test="jCId != null "> and m.j_c_id = #{jCId}</if>
+        </where>
+    </select>
+    
+    <select id="selectJmrJobById" parameterType="Integer" resultMap="JmrJobResult">
+        <include refid="selectJmrJobVo"/>
+        where m.j_c_id = #{jCId}
+    </select>
+        
+    <insert id="insertJmrJob" parameterType="Job_JmrJob" useGeneratedKeys="true" keyProperty="jId">
+        insert into jmr_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jPoId != null">j_po_id,</if>
+            <if test="jSex != null">j_sex,</if>
+            <if test="jEHistory != null">j_e_history,</if>
+            <if test="jCLevel != null">j_c_level,</if>
+            <if test="jFLanguage != null">j_f_language,</if>
+            <if test="jPrId != null">j_pr_id,</if>
+            <if test="jSRange != null">j_s_range,</if>
+            <if test="jECity != null">j_e_city,</if>
+            <if test="jPRequire != null and jPRequire != ''">j_p_require,</if>
+            <if test="jWelfare != null and jWelfare != ''">j_welfare,</if>
+            <if test="jNeedNumber != null">j_need_number,</if>
+            <if test="jRemark != null and jRemark != ''">j_remark,</if>
+            <if test="jBegin != null">j_begin,</if>
+            <if test="jExpire != null">j_expire,</if>
+            <if test="jCId != null">j_c_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jPoId != null">#{jPoId},</if>
+            <if test="jSex != null">#{jSex},</if>
+            <if test="jEHistory != null">#{jEHistory},</if>
+            <if test="jCLevel != null">#{jCLevel},</if>
+            <if test="jFLanguage != null">#{jFLanguage},</if>
+            <if test="jPrId != null">#{jPrId},</if>
+            <if test="jSRange != null">#{jSRange},</if>
+            <if test="jECity != null">#{jECity},</if>
+            <if test="jPRequire != null and jPRequire != ''">#{jPRequire},</if>
+            <if test="jWelfare != null and jWelfare != ''">#{jWelfare},</if>
+            <if test="jNeedNumber != null">#{jNeedNumber},</if>
+            <if test="jRemark != null and jRemark != ''">#{jRemark},</if>
+            <if test="jBegin != null">#{jBegin},</if>
+            <if test="jExpire != null">#{jExpire},</if>
+            <if test="jCId != null">#{jCId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJmrJob" parameterType="Job_JmrJob">
+        update jmr_job
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jPoId != null">j_po_id = #{jPoId},</if>
+            <if test="jSex != null">j_sex = #{jSex},</if>
+            <if test="jEHistory != null">j_e_history = #{jEHistory},</if>
+            <if test="jCLevel != null">j_c_level = #{jCLevel},</if>
+            <if test="jFLanguage != null">j_f_language = #{jFLanguage},</if>
+            <if test="jPrId != null">j_pr_id = #{jPrId},</if>
+            <if test="jSRange != null">j_s_range = #{jSRange},</if>
+            <if test="jECity != null">j_e_city = #{jECity},</if>
+            <if test="jPRequire != null and jPRequire != ''">j_p_require = #{jPRequire},</if>
+            <if test="jWelfare != null and jWelfare != ''">j_welfare = #{jWelfare},</if>
+            <if test="jNeedNumber != null">j_need_number = #{jNeedNumber},</if>
+            <if test="jRemark != null and jRemark != ''">j_remark = #{jRemark},</if>
+            <if test="jBegin != null">j_begin = #{jBegin},</if>
+            <if test="jExpire != null">j_expire = #{jExpire},</if>
+            <if test="jCId != null">j_c_id = #{jCId},</if>
+        </trim>
+        where j_id = #{jId}
+    </update>
+
+    <delete id="deleteJmrJobById" parameterType="Integer">
+        delete from jmr_job where j_id = #{jId}
+    </delete>
+
+    <delete id="deleteJmrJobByIds" parameterType="String">
+        delete from jmr_job where j_id in 
+        <foreach item="jId" collection="array" open="(" separator="," close=")">
+            #{jId}
+        </foreach>
+    </delete>
+
+</mapper>

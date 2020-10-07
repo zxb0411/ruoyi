@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增学生信息查询')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-student-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">学生姓名：</label>
+                <div class="col-sm-8">
+                    <input name="sName" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">学生身份证号：</label>
+                <div class="col-sm-8">
+                    <input name="sIdCard" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">性别(0男 1女)：</label>
+                <div class="col-sm-8">
+                    <select name="sSex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">出生年月：</label>
+                <div class="col-sm-8">
+                    <input name="sBirthday" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">毕业院校：</label>
+                <div class="col-sm-8">
+                    <input name="sCollege" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">毕业院校层次(0:985 1:211 2一批本科 3 二批本科 4专科 5高职)：</label>
+                <div class="col-sm-8">
+                    <input name="sCLevel" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">专业：</label>
+                <div class="col-sm-8">
+                    <input name="sProfession" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">学历(0博士 1硕士 2本科 3专科)：</label>
+                <div class="col-sm-8">
+                    <input name="sEHistory" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">籍贯-省份：</label>
+                <div class="col-sm-8">
+                    <input name="sNProvince" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">籍贯-地级市：</label>
+                <div class="col-sm-8">
+                    <input name="sNCity" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">外语水平(0英语四级 1英语6级 2日语二级 3日语三级 4无)：</label>
+                <div class="col-sm-8">
+                    <input name="sFLanguage" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">期望薪资范围：</label>
+                <div class="col-sm-8">
+                    <input name="sSRange" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">期望岗位：</label>
+                <div class="col-sm-8">
+                    <input name="sEPosition" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">就业意向地：</label>
+                <div class="col-sm-8">
+                    <input name="sECity" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">毕业时间：</label>
+                <div class="col-sm-8">
+                    <input name="sGTime" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">电话：</label>
+                <div class="col-sm-8">
+                    <input name="sTelephone" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">邮箱：</label>
+                <div class="col-sm-8">
+                    <input name="sEmail" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">成绩单附件地址：</label>
+                <div class="col-sm-8">
+                    <input name="sSAttachment" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">是否就业：</label>
+                <div class="col-sm-8">
+                    <input name="sIfWork" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">就业地-地级市：</label>
+                <div class="col-sm-8">
+                    <input name="sWCity" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">就业的企业：</label>
+                <div class="col-sm-8">
+                    <input name="sCompany" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "job/student"
+        $("#form-student-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-student-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

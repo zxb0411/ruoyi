@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts 实例</title>
+    <!-- 引入 echarts.js -->
+    <link th:href="@{/css/job.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="dsty" id="main1"></div>
+<div class="dsty" id="main2"></div>
+<div class="dsty" id="main3"></div>
+<div class="dsty" id="main4"></div>
+<div class="dsty" id="main5"></div>
+
+
+<input type="hidden" id="boy0" th:value="${boy0}"/>
+<input type="hidden" id="boy1" th:value="${boy1}"/>
+<input type="hidden" id="boy2" th:value="${boy2}"/>
+
+<input type="hidden" id="history0" th:value="${history0}"/>
+<input type="hidden" id="history1" th:value="${history1}"/>
+<input type="hidden" id="history2" th:value="${history2}"/>
+<input type="hidden" id="history3" th:value="${history3}"/>
+
+<input type="hidden" id="levle4" th:value="${levle4}"/>
+<input type="hidden" id="levle5" th:value="${levle5}"/>
+<input type="hidden" id="levle0" th:value="${levle0}"/>
+<input type="hidden" id="levle1" th:value="${levle1}"/>
+<input type="hidden" id="levle2" th:value="${levle2}"/>
+<input type="hidden" id="levle3" th:value="${levle3}"/>
+
+<input type="hidden" id="range0" th:value="${range0}"/>
+<input type="hidden" id="range1" th:value="${range1}"/>
+<input type="hidden" id="range2" th:value="${range2}"/>
+<input type="hidden" id="range3" th:value="${range3}"/>
+<input type="hidden" id="range4" th:value="${range4}"/>
+
+<input type="hidden" id="remake0" th:value="${remake0}"/>
+<input type="hidden" id="remake1" th:value="${remake1}"/>
+<input type="hidden" id="remake2" th:value="${remake2}"/>
+<input type="hidden" id="remake3" th:value="${remake3}"/>
+<input type="hidden" id="remake4" th:value="${remake4}"/>
+<input type="hidden" id="remake5" th:value="${remake5}"/>
+
+
+
+
+</body>
+
+<script th:src="@{/js/echarts.js}"></script>
+<script th:src="@{/js/echarts.min.js}"></script>
+<script th:src="@{/js/job.js}"></script>
+</html>

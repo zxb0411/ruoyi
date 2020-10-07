@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('存储企业信息列表')" />
+</head>
+<body class="gray-bg">
+<!--    <span th:text="${message}"></span>-->
+<!--    <span th:text="${session.message}"></span>-->
+<!--    <span th:if="${session.message} eq 'admin'" th:text="success"></span>-->
+<!--    <span th:if="${message} eq 'admin'" th:text="success"></span>-->
+<!--    <span th:if="${session.message=='admin'}" th:text="success"></span>-->
+<!--    <span th:if="${message=='admin'}" th:text="success"></span>-->
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse" th:if="${session.message} eq 'admin'">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>企业名称：</label>
+                                <input type="text" name="cName"/>
+                            </li>
+                            <li>
+                                <label>联系人：</label>
+                                <input type="text" name="cContact"/>
+                            </li>
+                            <li>
+                                <label>联系电话：</label>
+                                <input type="text" name="cTelephone"/>
+                            </li>
+                            <li>
+                                <label>邮箱：</label>
+                                <input type="text" name="cEmail"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="company:company:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="company:company:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="company:company:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="company:company:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('company:company:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('company:company:remove')}]];
+        var prefix = ctx + "company/company";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "存储企业信息",
+                clickToSelect:true,
+                columns: [
+                {
+                    checkbox: true
+                },
+                {
+                    field: 'cId',
+                    title: '企业id',
+                    visible: false
+                },
+                {
+                    field: 'cName',
+                    title: '企业名称'
+                },
+                {
+                    field: 'cSCode',
+                    title: '统一社会信用代码'
+                },
+                {
+                    field: 'cDescription',
+                    title: '企业简介',
+                    formatter: function(value,row,index){
+                        return $.table.tooltip(value,6);
+                    }
+                },
+                {
+                    field: 'cContact',
+                    title: '联系人'
+                },
+                {
+                    field: 'cTelephone',
+                    title: '联系电话'
+                },
+                {
+                    field: 'cEmail',
+                    title: '邮箱'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.cId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.cId + '\')"><i class="fa fa-remove"></i>删除</a>');
+
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

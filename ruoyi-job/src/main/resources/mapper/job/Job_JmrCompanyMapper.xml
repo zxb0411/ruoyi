@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.job.mapper.Job_JmrCompanyMapper">
+    
+    <resultMap type="Job_JmrCompany" id="JmrCompanyResult">
+        <result property="cId"    column="c_id"    />
+        <result property="cName"    column="c_name"    />
+        <result property="cPassword"    column="c_password"    />
+        <result property="cSCode"    column="c_s_code"    />
+        <result property="cDescription"    column="c_description"    />
+        <result property="cContact"    column="c_contact"    />
+        <result property="cTelephone"    column="c_telephone"    />
+        <result property="cEmail"    column="c_email"    />
+    </resultMap>
+
+    <sql id="selectJmrCompanyVo">
+        select c_id, c_name, c_password, c_s_code, c_description, c_contact, c_telephone, c_email from jmr_company
+    </sql>
+
+    <select id="selectJmrCompanyList" parameterType="Job_JmrCompany" resultMap="JmrCompanyResult">
+        <include refid="selectJmrCompanyVo"/>
+        <where>
+            <if test="cId != null and cId != ''">and c_id = #{cId}</if>
+            <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
+            <if test="cPassword != null  and cPassword != ''"> and c_password = #{cPassword}</if>
+            <if test="cSCode != null  and cSCode != ''"> and c_s_code like concat('%', #{cSCode}, '%')</if>
+            <if test="cDescription != null  and cDescription != ''"> and c_description like concat('%', #{cDescription}, '%')</if>
+            <if test="cContact != null  and cContact != ''"> and c_contact like concat('%', #{cContact}, '%')</if>
+            <if test="cTelephone != null  and cTelephone != ''"> and c_telephone like concat('%', #{cTelephone}, '%')</if>
+            <if test="cEmail != null  and cEmail != ''"> and c_email like concat('%', #{cEmail}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectJmrCompanyById" parameterType="Long" resultMap="JmrCompanyResult">
+        <include refid="selectJmrCompanyVo"/>
+        where c_id = #{id}
+    </select>
+        
+    <insert id="insertJmrCompany" parameterType="Job_JmrCompany" useGeneratedKeys="true" keyProperty="cId">
+        insert into jmr_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cName != null and cName != ''">c_name,</if>
+            <if test="cPassword != null and cPassword != ''">c_password,</if>
+            <if test="cSCode != null and cSCode != ''">c_s_code,</if>
+            <if test="cDescription != null and cDescription != ''">c_description,</if>
+            <if test="cContact != null and cContact != ''">c_contact,</if>
+            <if test="cTelephone != null and cTelephone != ''">c_telephone,</if>
+            <if test="cEmail != null and cEmail != ''">c_email,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cName != null and cName != ''">#{cName},</if>
+            <if test="cPassword != null and cPassword != ''">#{cPassword},</if>
+            <if test="cSCode != null and cSCode != ''">#{cSCode},</if>
+            <if test="cDescription != null and cDescription != ''">#{cDescription},</if>
+            <if test="cContact != null and cContact != ''">#{cContact},</if>
+            <if test="cTelephone != null and cTelephone != ''">#{cTelephone},</if>
+            <if test="cEmail != null and cEmail != ''">#{cEmail},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJmrCompany" parameterType="Job_JmrCompany">
+        update jmr_company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cName != null and cName != ''">c_name = #{cName},</if>
+            <if test="cPassword != null and cPassword != ''">c_password = #{cPassword},</if>
+            <if test="cSCode != null and cSCode != ''">c_s_code = #{cSCode},</if>
+            <if test="cDescription != null and cDescription != ''">c_description = #{cDescription},</if>
+            <if test="cContact != null and cContact != ''">c_contact = #{cContact},</if>
+            <if test="cTelephone != null and cTelephone != ''">c_telephone = #{cTelephone},</if>
+            <if test="cEmail != null and cEmail != ''">c_email = #{cEmail},</if>
+        </trim>
+        where c_id = #{cId}
+    </update>
+
+    <delete id="deleteJmrCompanyById" parameterType="Long">
+        delete from jmr_company where c_id = #{cId}
+    </delete>
+
+    <delete id="deleteJmrCompanyByIds" parameterType="String">
+        delete from jmr_company where c_id in 
+        <foreach item="cId" collection="array" open="(" separator="," close=")">
+            #{cId}
+        </foreach>
+    </delete>
+
+</mapper>

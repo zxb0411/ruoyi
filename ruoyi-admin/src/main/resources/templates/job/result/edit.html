@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改学生信息查询')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-student-edit" th:object="${jmrStudent}">
+        <input name="sId" th:field="*{sId}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">学生姓名：</label>
+            <div class="col-sm-8">
+                <input name="sName" th:field="*{sName}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">性别：</label>
+            <div class="col-sm-8">
+                <select name="sSex"  th:with="type=${@dict.getType('sys_user_sex')}" required disabled="disabled">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sSex}" ></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">出生年月：</label>
+            <div class="col-sm-8">
+                <input name="sBirthday" th:field="*{sBirthday}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">毕业院校：</label>
+            <div class="col-sm-8">
+                <input name="sCollege" th:field="*{sCollege}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">院校层次：</label>
+            <div class="col-sm-8">
+                <select name="sCLevel" class="form-control m-b" th:with="type=${@dict.getType('s_c_level')}" required disabled="disabled">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sCLevel}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">专业：</label>
+            <div class="col-sm-8">
+                <input name="sProfession" th:field="*{jobJmrProfession.pSClass}" class="form-control" type="text" required disabled="disabled" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">学历：</label>
+            <div class="col-sm-8">
+                <select name="sEHistory" class="form-control m-b" th:with="type=${@dict.getType('s_e_history')}" required disabled="disabled" >
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sEHistory}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">籍贯-省：</label>
+            <div class="col-sm-8">
+                <input name="sNProvince" th:field="*{sNProvince}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">籍贯-市：</label>
+            <div class="col-sm-8">
+                <input name="sNCity" th:field="*{sNCity}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">外语水平：</label>
+            <div class="col-sm-8">
+                <select name="sFLanguage" class="form-control m-b" th:with="type=${@dict.getType('s_f_language')}" required disabled="disabled">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sFLanguage}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">期望薪资：</label>
+            <div class="col-sm-8">
+                <select name="sSRange" class="form-control m-b" th:with="type=${@dict.getType('s_s_range')}" required disabled="disabled">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sSRange}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">期望岗位：</label>
+            <div class="col-sm-8">
+                <input name="sEPosition" th:field="*{jobJmrPosition.pName}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">就业意向地：</label>
+            <div class="col-sm-8">
+                <select name="sECity" class="form-control m-b" th:with="type=${@dict.getType('s_e_city')}" required disabled="disabled">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sECity}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">毕业时间：</label>
+            <div class="col-sm-8">
+                <input name="sGTime" th:field="*{sGTime}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">电话：</label>
+            <div class="col-sm-8">
+                <input name="sTelephone" th:field="*{sTelephone}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">邮箱：</label>
+            <div class="col-sm-8">
+                <input name="sEmail" th:field="*{sEmail}" class="form-control" type="text" required disabled="disabled">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">是否就业：</label>
+            <div class="col-sm-8">
+                <select name="sIfWork" class="form-control m-b" th:with="type=${@dict.getType('s_if_work')}" required disabled="disabled">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sIfWork}"></option>
+                </select>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "job/student";
+
+    function submitHandler() {
+        $.modal.close();
+    }
+
+
+</script>
+</body>
+</html>

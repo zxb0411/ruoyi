@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>统计</title>
+		<link th:href="@{/css/tongji.css}" rel="stylesheet" />
+
+		
+	</head>
+	<body>
+    <!--	获取性别-->
+	<input type="hidden" id="boy" th:value="${sexboy}">
+	<input type="hidden" id="girl" th:value="${sexgirl}">
+
+    <!--	获取院校层次-->
+	<input type="hidden" id="jbv" th:value="${lvjbv}">
+	<input type="hidden" id="ree" th:value="${lvree}">
+	<input type="hidden" id="ybb" th:value="${lvybb}">
+	<input type="hidden" id="rbb" th:value="${lvrbb}">
+	<input type="hidden" id="zk" th:value="${lvzk}">
+	<input type="hidden" id="gz" th:value="${lvgz}">
+
+	<!--	获取学历-->
+	<input type="hidden" id="pbs" th:value="${PBS}">
+	<input type="hidden" id="pss" th:value="${PSS}">
+	<input type="hidden" id="pbk" th:value="${PBK}">
+	<input type="hidden" id="pzk" th:value="${PZK}">
+
+	<!--	获取外语等级-->
+	<input type="hidden" id="enf" th:value="${ENF}">
+	<input type="hidden" id="ens" th:value="${ENS}">
+	<input type="hidden" id="jptw" th:value="${JPTW}">
+	<input type="hidden" id="jpth" th:value="${JPTH}">
+	<input type="hidden" id="non" th:value="${NON}">
+
+	<!--	薪资期望-->
+	<input type="hidden" id="MIN" th:value="${Min}">
+	<input type="hidden" id="LOW" th:value="${Low}">
+	<input type="hidden" id="MID" th:value="${Mid}">
+	<input type="hidden" id="MAX" th:value="${Max}">
+
+	<!--	获取性别-->
+	<input type="hidden" id="yt" th:value="${Yt}">
+	<input type="hidden" id="other" th:value="${Other}">
+
+
+
+		<div class="dsty" id="main1"></div>
+		<div class="dsty" id="main2"></div>
+		<div class="dsty" id="main3"></div>
+		<div class="dsty" id="main4"></div>
+	    <div class="dsty" id="main5"></div>
+	    <div class="dsty" id="main6"></div>
+	</body>
+    <script th:src="@{/js/echarts.js}"></script>
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <script th:src="@{/js/tongji.js}"></script>
+</html>

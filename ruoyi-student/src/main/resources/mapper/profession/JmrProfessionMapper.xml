@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.student.mapper.JmrProfessionMapper">
+    
+    <resultMap type="JmrProfession" id="JmrProfessionResult">
+        <result property="pId"    column="p_id"    />
+        <result property="pMClass"    column="p_m_class"    />
+        <result property="pSClass"    column="p_s_class"    />
+    </resultMap>
+
+    <sql id="selectJmrProfessionVo">
+        select p_id, p_m_class, p_s_class from jmr_profession
+    </sql>
+
+    <sql id="selectJmrProfessionShort">
+        select p_id, p_s_class from jmr_profession
+    </sql>
+
+    <select id="selectJmrProfessionList" parameterType="JmrProfession" resultMap="JmrProfessionResult">
+        <include refid="selectJmrProfessionVo"/>
+        <where>  
+            <if test="pMClass != null  and pMClass != ''"> and p_m_class = #{pMClass}</if>
+            <if test="pSClass != null  and pSClass != ''"> and p_s_class = #{pSClass}</if>
+        </where>
+    </select>
+
+    <select id="selectJmrProfessionListShort" parameterType="JmrProfession" resultMap="JmrProfessionResult">
+        <include refid="selectJmrProfessionShort" />
+    </select>
+    
+    <select id="selectJmrProfessionById" parameterType="Long" resultMap="JmrProfessionResult">
+        <include refid="selectJmrProfessionVo"/>
+        where p_id = #{pId}
+    </select>
+        
+    <insert id="insertJmrProfession" parameterType="JmrProfession" useGeneratedKeys="true" keyProperty="pId">
+        insert into jmr_profession
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pMClass != null and pMClass != ''">p_m_class,</if>
+            <if test="pSClass != null and pSClass != ''">p_s_class,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pMClass != null and pMClass != ''">#{pMClass},</if>
+            <if test="pSClass != null and pSClass != ''">#{pSClass},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJmrProfession" parameterType="JmrProfession">
+        update jmr_profession
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pMClass != null and pMClass != ''">p_m_class = #{pMClass},</if>
+            <if test="pSClass != null and pSClass != ''">p_s_class = #{pSClass},</if>
+        </trim>
+        where p_id = #{pId}
+    </update>
+
+    <delete id="deleteJmrProfessionById" parameterType="Long">
+        delete from jmr_profession where p_id = #{pId}
+    </delete>
+
+    <delete id="deleteJmrProfessionByIds" parameterType="String">
+        delete from jmr_profession where p_id in 
+        <foreach item="pId" collection="array" open="(" separator="," close=")">
+            #{pId}
+        </foreach>
+    </delete>
+
+</mapper>

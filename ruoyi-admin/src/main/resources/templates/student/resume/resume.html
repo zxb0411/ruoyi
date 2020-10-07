@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('存储学生保持的简历信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>主修课程：</label>
+                                <input type="text" name="rMCourse"/>
+                            </li>
+                            <li>
+                                <label>掌握技能：</label>
+                                <input type="text" name="rSkill"/>
+                            </li>
+                            <li>
+                                <label>专业技能证书：</label>
+                                <input type="text" name="rSCertificate"/>
+                            </li>
+<!--                            <li>-->
+<!--                                <label>获得荣誉/奖项：</label>-->
+<!--                                <input type="text" name="rHonor"/>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <label>自我评价：</label>-->
+<!--                                <input type="text" name="rSEvaluate"/>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <label>备注：</label>-->
+<!--                                <input type="text" name="rRemark"/>-->
+<!--                            </li>-->
+                            <li th:if="${session.admin} eq 'yes'">
+                                <label>学生姓名：</label>
+                                <select name="rSId" class="form-control m-b"
+                                        th:with="profession=${@JmrStudentServiceImpl.selectJmrStudentList(null)}">
+                                    <option value="">所有</option>
+                                    <option th:each="message:${profession}" th:value="${message.getsId()}"
+                                            th:text="${message.getsName()}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="student:resume:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="student:resume:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="student:resume:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="student:resume:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('student:resume:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('student:resume:remove')}]];
+        var prefix = ctx + "student/resume";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "存储学生保持的简历信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'rId',
+                    title: '简历id',
+                    visible: false
+                },
+                {
+                    field: 'rMCourse',
+                    title: '主修课程'
+                },
+                {
+                    field: 'rSkill',
+                    title: '掌握技能'
+                },
+                {
+                    field: 'rSCertificate',
+                    title: '专业技能证书'
+                },
+                {
+                    field: 'rHonor',
+                    title: '获得荣誉/奖项'
+                },
+                {
+                    field: 'rCareer',
+                    title: '实习'
+                },
+                {
+                    field: 'rPExperience',
+                    title: '项目经验'
+                },
+                {
+                    field: 'rSEvaluate',
+                    title: '自我评价'
+                },
+                {
+                    field: 'rRemark',
+                    title: '备注'
+                },
+                {
+                    field: 'student.sName',
+                    title: '学生姓名'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.rId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.rId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

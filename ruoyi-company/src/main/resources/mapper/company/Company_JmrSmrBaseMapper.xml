@@ -1,0 +1,14 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.company.mapper.Company_JmrSmrBaseMapper">
+    
+
+    
+    <insert id="save" parameterType="Company_JmrSmrBase" keyProperty="smr_b_id" keyColumn="smr_b_id" useGeneratedKeys="true">
+        insert into jmr_smr_base(smr_b_id,smr_sex_value,smr_level_value,smr_profession_value,smr_history_value,smr_language_value,smr_range_value,smr_position_value,jmr_city_value)
+        values(#{smr_b_id},#{smr_sex_value},#{smr_level_value},#{smr_profession_value},#{smr_history_value},#{smr_language_value},#{smr_range_value},#{smr_position_value},#{jmr_city_value})
+    </insert>
+
+
+</mapper>

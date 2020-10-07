@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('企业岗位管理3.0列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>招聘岗位：</label>
+                                <select name="jPoId" th:with="aa=${@Company_JmrPositionServiceImplCompany.selectJmrPositionList(null)}">
+                                    <option value="">所有</option>
+                                    <option th:each="message:${aa}" th:value="${message.getpId()}" th:text="${message.getpName()}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>性别要求：</label>
+                                <select name="jSex" th:with="type=${@dict.getType('sex_company')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>学历要求：</label>
+                                <select name="jEHistory" th:with="type=${@dict.getType('s_e_history')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>招聘院校层次：</label>
+                                <select name="jCLevel" th:with="type=${@dict.getType('s_c_level')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>外语水平：</label>
+                                <select name="jFLanguage" th:with="type=${@dict.getType('s_f_language')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>专业要求：</label>
+                                <select name="jPrId" th:with="profession=${@JmrProfessionServiceImpl.selectJmrProfessionList()}">
+                                    <option value="">所有</option>
+                                    <option th:each="pro:${profession}" th:value="${pro.getId()}" th:text="${pro.getPsclass()}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>薪资范围：</label>
+                                <select name="jSRange" th:with="type=${@dict.getType('s_s_range')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>就业意向地：</label>
+                                <select name="jECity" th:with="type=${@dict.getType('s_e_city')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+
+
+<!--                            <li class="select-time">-->
+<!--                                <label>开始时间：</label>-->
+<!--                                <input type="date" class="time-input" id="startTime" placeholder="开始时间" name="jBegin"/>-->
+<!--&lt;!&ndash;                                <span>-</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endJBegin]"/>&ndash;&gt;-->
+<!--                            </li>-->
+<!--                            <li class="select-time">-->
+<!--                                <label>过期时间：</label>-->
+<!--&lt;!&ndash;                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginJExpire]"/>&ndash;&gt;-->
+<!--                                <span>-</span>-->
+<!--                                <input type="date" class="time-input" id="endTime" placeholder="结束时间" name="jExpire"/>-->
+<!--                            </li>-->
+                            <li>
+                                <label>企业：</label>
+                                <select name="jCId" class="form-control m-b" th:with="type=${@JmrCompanyService.selectJmrCompanyList(null)}" required>
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.cName}" th:value="${dict.cId}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="company:job:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="company:job:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="company:job:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="company:job:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('company:job:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('company:job:remove')}]];
+        var jSexDatas = [[${@dict.getType('sex_company')}]];
+        var jEHistoryDatas = [[${@dict.getType('s_e_history')}]];
+        var jCLevelDatas = [[${@dict.getType('s_c_level')}]];
+        var jFLanguageDatas = [[${@dict.getType('s_f_language')}]];
+        var jSRangeDatas = [[${@dict.getType('s_s_range')}]];
+        var jECityDatas = [[${@dict.getType('s_e_city')}]];
+        var prefix = ctx + "company/job";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                clickToSelect:true,
+                modalName: "企业岗位管理3.0",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'jId',
+                    title: '岗位id',
+                    visible: false
+                },
+                {
+                    field: 'companyJmrPosition.pName',
+                    title: '招聘岗位'
+                },
+                {
+                    field: 'jSex',
+                    title: '性别要求',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(jSexDatas, value);
+                    }
+                },
+                {
+                    field: 'jEHistory',
+                    title: '学历要求',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(jEHistoryDatas, value);
+                    }
+                },
+                {
+                    field: 'jCLevel',
+                    title: '招聘院校层次',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(jCLevelDatas, value);
+                    }
+                },
+                {
+                    field: 'jFLanguage',
+                    title: '外语水平',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(jFLanguageDatas, value);
+                    }
+                },
+                {
+                    field: 'companyJmrProfession.psclass',
+                    title: '专业要求',
+                    formatter: function(value,row,index){
+                        return $.table.tooltip(value,3);
+                    }
+                },
+                {
+                    field: 'jSRange',
+                    title: '薪资范围',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(jSRangeDatas, value);
+                    }
+                },
+                {
+                    width: '15',
+                    field: 'jECity',
+                    title: '就业意向地',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(jECityDatas, value);
+                    }
+                },
+                {
+                    field: 'jPRequire',
+                    title: '岗位要求'
+                },
+                {
+                    field: 'jWelfare',
+                    title: '福利待遇',
+                    formatter: function(value,row,index){
+                        return $.table.tooltip(value,3);
+                    }
+                },
+                {
+                    field: 'jNeedNumber',
+                    title: '需求人数'
+                },
+                {
+                    field: 'jRemark',
+                    title: '备注'
+                },
+                // {
+                //     field: 'jBegin',
+                //     title: '开始时间'
+                // },
+                {
+                    field: 'jExpire',
+                    title: '过期时间',
+                    formatter: function(value,row,index){
+                        return $.table.tooltip(value,3);
+                    }
+                },
+                {
+                    width: '100',
+                    field: 'companyJmrCompany.cName',
+                    title: '企业'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        console.log(row);
+                        var actions = [];
+                        // actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.jId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        // actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.jId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="<button></button> btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="selectRadioUser(\'' + row.jId + '\')"><i class="fa fa-edit"></i>匹配</a> ');
+                         return actions.join('');
+                        // return $.table.dropdownToggle(actions.join(''));
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        function selectRadioUser(id){
+            //console.log(id);
+            $.modal.open("匹配结果", prefix + "/radio?id="+id);
+        }
+    </script>
+</body>
+</html>

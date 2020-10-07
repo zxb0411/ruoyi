@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.statistic.mapper.StudentMapper">
+    <!--根据id查询客户信息 -->
+    <select id="findStudentSex" parameterType="Student"
+            resultType="Integer">
+		select count(s_sex) from jmr_student where s_sex = #{a}
+
+	</select>
+
+    <select id="findLevalSchool" parameterType="Student"
+            resultType="Integer">
+		select count(s_c_level) from jmr_student where s_c_level = #{b}
+	</select>
+
+	<select id="findProfession" parameterType="Student"
+			resultType="Integer">
+		select count(s_e_history) from jmr_student where s_e_history = #{c}
+	</select>
+
+	<select id="findLanguage" parameterType="Student"
+			resultType="Integer">
+		select count(s_f_language) from jmr_student where s_f_language = #{d}
+	</select>
+
+	<select id="findMoney" parameterType="Student"
+			resultType="Integer">
+		select count(s_s_range) from jmr_student where s_s_range = #{e}
+	</select>
+
+	<select id="findWhere" parameterType="Student"
+			resultType="Integer">
+		select count(s_e_city) from jmr_student where s_e_city = #{f}
+	</select>
+</mapper>

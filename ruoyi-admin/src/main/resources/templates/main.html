@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>若依介绍</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+    <link href="../static/css/blue.css" th:href="@{/css/blue.css}" rel="stylesheet" />
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet" />
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet" />
+
+    <style>
+        li {
+
+            font-family: "宋体";
+            font-style: italic;
+
+        }
+
+        h4 {
+
+            font-style: italic;
+        }
+
+        .clients,
+        h5,
+        p {
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main1_bg">
+        <!-- start main1 -->
+        <div class="container">
+            <div class="main slider_text texxt-center">
+                <h4>开发区人社局人岗匹配系统</h4>
+                <p> Human Post matching system of human Resources and Social Security Bureau of
+                    Development Zone</p>
+            </div>
+        </div>
+        <hr>
+
+    </div>
+    <div class="main_btm">
+        <!-- start main_btm -->
+        <div class="container">
+            <div class="main span_of_3">
+                <div class="col-md-3 span1_of_3">
+                    <h4>功能简介</h4>
+                    <ul class="list-unstyled nav_list">
+                        <li><a href="#"><span>分为学生端，企业端，管理员</span></a></li>
+                        <br />
+                        <li><a href="#"><span>学生端：</span></a></li>
+                        <li><a href="#">▪ 录入简历，一键匹配企业 </a></li>
+                        <li><a href="#">▪ 企业信息查询，查找企业</a></li>
+                        <br />
+                        <li><a href="#"> <span>企业端：</span></a></li>
+                        <li><a href="#">▪ 发布岗位，一键匹配学生</a></li>
+                        <br />
+                        <li><a href="#"> <span>管理员：</span> </a></li>
+                        <li><a href="#">▪ 统计就业学生与企业信息</a></li>
+
+
+                    </ul>
+                </div>
+                <div class="col-md-6 span1_of_3">
+                    <h5 style="   font-size :15px; width:80%;  height: 125px;">
+                        <span>学生方面：</span>按学生性别、院校层次、学历、专业、
+                        外语水平、期望薪资范围、期望岗位、就业地分析统计<br>
+                        <span> 企业方面：</span>按企业岗位、院校层次要求、学历要求、专业要
+                        求、外语水平要求、薪资范围、企业性质、福利待遇分析统计
+                        学生与企业要求 匹配情况数据分析 </h5>
+                    <div>
+
+                        <!-- 轮播图 -->
+                        <div class="middle " style="width: 400px;">
+                            <div id="myCarousel" class="carousel slide">
+                                <!-- 轮播（Carousel）指标 -->
+                                <ol class="carousel-indicators">
+                                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                                </ol>
+                                <!-- 轮播（Carousel）项目 -->
+                                <div class="carousel-inner">
+                                    <div class="item active">
+                                        <img src="../static/slider_pic1.jpg" th:src="@{/slider_pic1.jpg} "
+                                            alt="First slide">
+                                    </div>
+                                    <div class="item">
+                                        <img src="../static/slider_pic2.jpg" th:src="@{/slider_pic2.jpg} "
+                                            alt="Second slide">
+                                    </div>
+                                    <div class="item">
+                                        <img src="../static/slider_pic3.jpg" th:src="@{/slider_pic3.jpg} "
+                                            alt="Third slide">
+                                    </div>
+                                </div>
+                                <!-- 轮播（Carousel）导航 -->
+                                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3 span1_of_3" style="float:left;">
+                    <h4>基础模块</h4>
+                    <div class="clients" style="
+                height: 400px;
+                margin-bottom: 10px;">
+                        <b>学生应聘模块</b><br />
+                        <br />
+                        1、学生信息修改<br />
+                        2、发布简历<br />
+                        3、手动匹配<br />
+                        4、定时匹配<br />
+                        <br />
+                        <b>企业招聘模块</b><br />
+                        <br />
+                        1、企业信息修改<br />
+                        2、岗位发布<br />
+                        3、手动匹配<br />
+                        <br />
+
+                        <b>就业指导模块</b><br />
+                        <br />
+                        1、学生信息查询<br />
+                        2、企业信息查询<br />
+                        3、发布岗位信息查询<br />
+                        4、匹配信息查询（学生端）<br />
+
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="wrapper wrapper-content">-->
+    <!--    <div class="row">-->
+
+    <!--        <div class="col-sm-4" >-->
+    <!--            <div class="ibox float-e-margins">-->
+    <!--                <div class="ibox-title">-->
+    <!--                    <h5>人才匹配</h5>-->
+    <!--                </div>-->
+    <!--                <div class="ibox-content no-padding">-->
+    <!--                    <div class="ibox-content">-->
+    <!--                        <div style="height:7px;">-->
+
+    <!--                        </div>-->
+    <!--                        <p id="pay-qrcode">-->
+    <!--                            <a href="javascript:;"><img th:src="@{/img/1.png}" width="100%">-->
+    <!--                            </a>-->
+    <!--                        </p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        <div class="col-sm-4">-->
+
+    <!--            <div class="ibox float-e-margins">-->
+    <!--                <div class="ibox-title">-->
+    <!--                    <h5>校企合作</h5>-->
+
+    <!--                </div>-->
+
+    <!--                <div class="ibox-content">-->
+    <!--                    <p id="pay-qrcode">-->
+    <!--                        <a href="javascript:;"><img th:src="@{/img/rg1.jpg}" width="100%" style="height:318px">-->
+    <!--                        </a>-->
+    <!--                    </p>-->
+
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        <div class="col-sm-4">-->
+    <!--            <div class="ibox float-e-margins">-->
+    <!--                <div class="ibox-title">-->
+    <!--                    <h5>职业规划 </h5>-->
+    <!--                </div>-->
+    <!--                <div class="ibox-content">-->
+    <!--                    <div style="height:35px;">-->
+
+    <!--                    </div>-->
+    <!--                    <div>-->
+    <!--                        <p id="pay-qrcode">-->
+    <!--                            <a href="javascript:;"><img th:src="@{/img/lq.jpg}" width="100%">-->
+    <!--                            </a>-->
+    <!--                        </p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</div>-->
+
+
+    <!--    </div>-->
+
+    <!--    </div>-->
+    <div class="wrapper wrapper-content">
+        <div class="row">
+
+            <div class="col-sm-4" style="">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>人才匹配</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <div class="ibox-content">
+                            <div style="height:7px;">
+
+                            </div>
+                            <p id="pay-qrcode">
+                                <a href="javascript:;"><img th:src="@{/img/1.png}" width="100%">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>校企合作</h5>
+
+                    </div>
+
+                    <div class="ibox-content">
+                        <p id="pay-qrcode">
+                            <a href="javascript:;"><img th:src="@{/img/rg1.jpg}" width="100%" style="height:318px">
+                            </a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>职业规划 </h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div style="height:35px;">
+
+                        </div>
+                        <div>
+                            <p id="pay-qrcode">
+                                <a href="javascript:;"><img th:src="@{/img/lq.jpg}" width="100%">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script type="text/javascript">
+        $('#pay-qrcode').click(function () {
+            var html = $(this).html();
+            parent.layer.open({
+                title: false,
+                type: 1,
+                closeBtn: false,
+                shadeClose: true,
+                area: ['600px', 'auto'],
+                content: html
+            });
+        });
+    </script>
+</body>
+
+</html>

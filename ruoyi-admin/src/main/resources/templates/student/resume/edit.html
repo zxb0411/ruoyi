@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改存储学生保持的简历信息')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-resume-edit" th:object="${jmrResume}">
+            <input name="rId" th:field="*{rId}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">主修课程：</label>
+                <div class="col-sm-8">
+                    <input name="rMCourse" th:field="*{rMCourse}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">掌握技能：</label>
+                <div class="col-sm-8">
+                    <input name="rSkill" th:field="*{rSkill}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">专业技能证书：</label>
+                <div class="col-sm-8">
+                    <input name="rSCertificate" th:field="*{rSCertificate}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">获得荣誉/奖项：</label>
+                <div class="col-sm-8">
+                    <input name="rHonor" th:field="*{rHonor}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">实习：</label>
+                <div class="col-sm-8">
+                    <textarea name="rCareer" class="form-control" required>[[*{rCareer}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">项目经验：</label>
+                <div class="col-sm-8">
+                    <textarea name="rPExperience" class="form-control" required>[[*{rPExperience}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">自我评价：</label>
+                <div class="col-sm-8">
+                    <input name="rSEvaluate" th:field="*{rSEvaluate}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">备注：</label>
+                <div class="col-sm-8">
+                    <input name="rRemark" th:field="*{rRemark}" class="form-control" type="text" required>
+                </div>
+            </div>
+<!--            <div class="form-group">    -->
+<!--                <label class="col-sm-3 control-label is-required">学生id：</label>-->
+<!--                <div class="col-sm-8">-->
+<!--                    <input name="rSId" th:field="*{rSId}" class="form-control" type="text" required>-->
+<!--                </div>-->
+<!--            </div>-->
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "student/resume";
+        $("#form-resume-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-resume-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

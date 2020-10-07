@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.company.mapper.Company_JmrStudentMatchResultMapper">
+    
+    <resultMap type="Company_JmrStudentMatchResult" id="JmrStudentMatchResultResult">
+        <result property="smrId"    column="smr_id"    />
+        <result property="smrCId"    column="smr_c_id"    />
+        <result property="smrJId"    column="smr_j_id"    />
+        <result property="smrSId"    column="smr_s_id"    />
+        <result property="smrRId"    column="smr_r_id"    />
+        <result property="smrBId"    column="smr_b_id"    />
+        <result property="smrValue"    column="smr_value"    />
+        <association property="jmr_student" javaType="Company_JmrStudent">
+            <id column="s_id" property="sId"></id>
+            <result column="s_name" property="sName"></result>
+            <result column="s_id_card" property="sIdCard"></result>
+            <result column="s_sex" property="sSex"></result>
+            <result column="s_birthday" property="sBirthday"></result>
+            <result column="s_college" property="sCollege"></result>
+            <result column="s_c_level" property="sCLevel"></result>
+            <result column="s_profession" property="sProfession"></result>
+            <result column="s_e_history" property="sEHistory"></result>
+            <result column="s_n_province" property="sNProvince"></result>
+            <result column="s_n_city" property="sNCity"></result>
+            <result column="s_f_language" property="sFLanguage"></result>
+            <result column="s_s_range" property="sSRange"></result>
+            <result column="s_e_position" property="sEPosition"></result>
+            <result column="s_e_city" property="sECity"></result>
+            <result column="s_g_time" property="sGTime"></result>
+            <result column="s_telephone" property="sTelephone"></result>
+            <result column="s_email" property="sEmail"></result>
+            <result column="s_s_attachment" property="sSAttachment"></result>
+            <result column="s_if_work" property="sIfWork"></result>
+            <result column="s_w_city" property="sWCity"></result>
+            <result column="s_company" property="sCompany"></result>
+        </association>
+    </resultMap>
+
+    <sql id="selectJmrStudentMatchResultVo">
+        select smr_id, smr_c_id, smr_j_id, smr_s_id, smr_r_id, smr_b_id, smr_value from jmr_student_match_result
+    </sql>
+    <sql id="selectJmrStudentVo">
+            select jm.*,js.*from jmr_student_match_result jm,jmr_student js where jm.smr_s_id=js.s_id
+
+        </sql>
+    <select id="selectJmrStudentMatchResultList" parameterType="Company_JmrStudentMatchResult" resultMap="JmrStudentMatchResultResult">
+        <include refid="selectJmrStudentVo"/>
+
+            <if test="smrCId != null "> and smr_c_id = #{smrCId}</if>
+            <if test="smrJId != null "> and smr_j_id = #{smrJId}</if>
+            <if test="smrSId != null "> and smr_s_id = #{smrSId}</if>
+            <if test="smrRId != null "> and smr_r_id = #{smrRId}</if>
+            <if test="smrBId != null "> and smr_b_id = #{smrBId}</if>
+            <if test="smrValue != null "> and smr_value = #{smrValue}</if>
+        ORDER BY smr_value DESC
+    </select>
+    
+    <select id="selectJmrStudentMatchResultById" parameterType="Long" resultMap="JmrStudentMatchResultResult">
+        <include refid="selectJmrStudentMatchResultVo"/>
+        where smr_id = #{smrId}
+    </select>
+        
+    <insert id="insertJmrStudentMatchResult" parameterType="Company_JmrStudentMatchResult" useGeneratedKeys="true" keyProperty="smrId">
+        insert into jmr_student_match_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="smrCId != null">smr_c_id,</if>
+            <if test="smrJId != null">smr_j_id,</if>
+            <if test="smrSId != null">smr_s_id,</if>
+            <if test="smrRId != null">smr_r_id,</if>
+            <if test="smrBId != null">smr_b_id,</if>
+            <if test="smrValue != null">smr_value,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="smrCId != null">#{smrCId},</if>
+            <if test="smrJId != null">#{smrJId},</if>
+            <if test="smrSId != null">#{smrSId},</if>
+            <if test="smrRId != null">#{smrRId},</if>
+            <if test="smrBId != null">#{smrBId},</if>
+            <if test="smrValue != null">#{smrValue},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJmrStudentMatchResult" parameterType="Company_JmrStudentMatchResult">
+        update jmr_student_match_result
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="smrCId != null">smr_c_id = #{smrCId},</if>
+            <if test="smrJId != null">smr_j_id = #{smrJId},</if>
+            <if test="smrSId != null">smr_s_id = #{smrSId},</if>
+            <if test="smrRId != null">smr_r_id = #{smrRId},</if>
+            <if test="smrBId != null">smr_b_id = #{smrBId},</if>
+            <if test="smrValue != null">smr_value = #{smrValue},</if>
+        </trim>
+        where smr_id = #{smrId}
+    </update>
+
+    <delete id="deleteJmrStudentMatchResultById" parameterType="Long">
+        delete from jmr_student_match_result where smr_c_id = #{smrId}
+    </delete>
+
+    <delete id="deleteJmrStudentMatchResultByIds" parameterType="String">
+        delete from jmr_student_match_result where smr_id in 
+        <foreach item="smrId" collection="array" open="(" separator="," close=")">
+            #{smrId}
+        </foreach>
+    </delete>
+
+</mapper>

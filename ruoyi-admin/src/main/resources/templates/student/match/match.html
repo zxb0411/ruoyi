@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('匹配信息')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li th:if="${session.admin} eq 'yes'">
+                            <label>学生姓名：</label>
+                            <select name="jmrSId" class="form-control m-b"
+                                    th:with="profession=${@JmrStudentServiceImpl.selectJmrStudentList(null)}">
+                                <option value="">所有</option>
+                                <option th:each="message:${profession}" th:value="${message.getsId()}"
+                                        th:text="${message.getsName()}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>企业名称：</label>
+                            <select name="jmrCId" class="form-control m-b"
+                                    th:with="profession=${@JmrJobServiceImpl.selectList()}">
+                                <option value="">所有</option>
+                                <option th:each="message:${profession}" th:value="${message.getCompany().getcId()}"
+                                        th:text="${message.getCompany().getcName()}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>岗位名称：</label>
+                            <select name="jmrJId" class="form-control m-b" required
+                                    th:with="profession=${@JmrPositionServiceImpl.selectJmrPositionList(null)}">
+                                <option value="">所有</option>
+                                <option th:each="message:${profession}" th:value="${message.getpId()}"
+                                        th:text="${message.getpName()}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>匹配值：</label>
+                            <input type="text" name="jmrValue"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var prefix = ctx + "student/match";
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            sortName: "jmrValue",
+            modalName: "匹配信息",
+            sortOrder: "desc",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'jmrId',
+                    title: '匹配岗位id',
+                    visible: false
+                },
+                {
+                    field: 'jmrStudents.sName',
+                    title: '学生姓名'
+                },
+                {
+                    field: 'jmrCompanySave.cName',
+                    title: '企业名称'
+                },
+                {
+                    field: 'position.pName',
+                    title: '岗位名称'
+                },
+                {
+                    field: 'jmrValue',
+                    title: '匹配值'
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

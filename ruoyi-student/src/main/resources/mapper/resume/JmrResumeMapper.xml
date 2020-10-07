@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.student.mapper.JmrResumeMapper">
+    
+    <resultMap type="JmrResume" id="JmrResumeResult">
+        <result property="rId"    column="r_id"    />
+        <result property="rMCourse"    column="r_m_course"    />
+        <result property="rSkill"    column="r_skill"    />
+        <result property="rSCertificate"    column="r_s_certificate"    />
+        <result property="rHonor"    column="r_honor"    />
+        <result property="rCareer"    column="r_career"    />
+        <result property="rPExperience"    column="r_p_experience"    />
+        <result property="rSEvaluate"    column="r_s_evaluate"    />
+        <result property="rRemark"    column="r_remark"    />
+        <result property="rSId"    column="r_s_id"    />
+
+        <collection property="student" javaType="JmrStudent">
+            <result property="sName" column="s_name"/>
+        </collection>
+    </resultMap>
+
+    <sql id="selectJmrResumeVo">
+        select r_id, r_m_course, r_skill, r_s_certificate, r_honor, r_career, r_p_experience, r_s_evaluate, r_remark, r_s_id, jmr_student.s_name
+         from jmr_resume
+         left join jmr_student on jmr_resume.r_s_id=jmr_student.s_id
+    </sql>
+
+    <select id="selectJmrResumeList" parameterType="JmrResume" resultMap="JmrResumeResult">
+        <include refid="selectJmrResumeVo"/>
+        <where>  
+            <if test="rMCourse != null  and rMCourse != ''"> and r_m_course = #{rMCourse}</if>
+            <if test="rSkill != null  and rSkill != ''"> and r_skill = #{rSkill}</if>
+            <if test="rSCertificate != null  and rSCertificate != ''"> and r_s_certificate = #{rSCertificate}</if>
+            <if test="rHonor != null  and rHonor != ''"> and r_honor = #{rHonor}</if>
+            <if test="rCareer != null  and rCareer != ''"> and r_career = #{rCareer}</if>
+            <if test="rPExperience != null  and rPExperience != ''"> and r_p_experience = #{rPExperience}</if>
+            <if test="rSEvaluate != null  and rSEvaluate != ''"> and r_s_evaluate = #{rSEvaluate}</if>
+            <if test="rRemark != null  and rRemark != ''"> and r_remark = #{rRemark}</if>
+            <if test="rSId != null "> and r_s_id = #{rSId}</if>
+        </where>
+    </select>
+    
+    <select id="selectJmrResumeById" parameterType="Long" resultMap="JmrResumeResult">
+        <include refid="selectJmrResumeVo"/>
+        where r_id = #{rId}
+    </select>
+        
+    <insert id="insertJmrResume" parameterType="JmrResume" useGeneratedKeys="true" keyProperty="rId">
+        insert into jmr_resume
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rMCourse != null and rMCourse != ''">r_m_course,</if>
+            <if test="rSkill != null and rSkill != ''">r_skill,</if>
+            <if test="rSCertificate != null and rSCertificate != ''">r_s_certificate,</if>
+            <if test="rHonor != null and rHonor != ''">r_honor,</if>
+            <if test="rCareer != null and rCareer != ''">r_career,</if>
+            <if test="rPExperience != null and rPExperience != ''">r_p_experience,</if>
+            <if test="rSEvaluate != null and rSEvaluate != ''">r_s_evaluate,</if>
+            <if test="rRemark != null and rRemark != ''">r_remark,</if>
+            <if test="rSId != null">r_s_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rMCourse != null and rMCourse != ''">#{rMCourse},</if>
+            <if test="rSkill != null and rSkill != ''">#{rSkill},</if>
+            <if test="rSCertificate != null and rSCertificate != ''">#{rSCertificate},</if>
+            <if test="rHonor != null and rHonor != ''">#{rHonor},</if>
+            <if test="rCareer != null and rCareer != ''">#{rCareer},</if>
+            <if test="rPExperience != null and rPExperience != ''">#{rPExperience},</if>
+            <if test="rSEvaluate != null and rSEvaluate != ''">#{rSEvaluate},</if>
+            <if test="rRemark != null and rRemark != ''">#{rRemark},</if>
+            <if test="rSId != null">#{rSId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJmrResume" parameterType="JmrResume">
+        update jmr_resume
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rMCourse != null and rMCourse != ''">r_m_course = #{rMCourse},</if>
+            <if test="rSkill != null and rSkill != ''">r_skill = #{rSkill},</if>
+            <if test="rSCertificate != null and rSCertificate != ''">r_s_certificate = #{rSCertificate},</if>
+            <if test="rHonor != null and rHonor != ''">r_honor = #{rHonor},</if>
+            <if test="rCareer != null and rCareer != ''">r_career = #{rCareer},</if>
+            <if test="rPExperience != null and rPExperience != ''">r_p_experience = #{rPExperience},</if>
+            <if test="rSEvaluate != null and rSEvaluate != ''">r_s_evaluate = #{rSEvaluate},</if>
+            <if test="rRemark != null and rRemark != ''">r_remark = #{rRemark},</if>
+            <if test="rSId != null">r_s_id = #{rSId},</if>
+        </trim>
+        where r_id = #{rId}
+    </update>
+
+    <delete id="deleteJmrResumeById" parameterType="Long">
+        delete from jmr_resume where r_id = #{rId}
+    </delete>
+
+    <delete id="deleteJmrResumeByIds" parameterType="String">
+        delete from jmr_resume where r_id in 
+        <foreach item="rId" collection="array" open="(" separator="," close=")">
+            #{rId}
+        </foreach>
+    </delete>
+
+</mapper>

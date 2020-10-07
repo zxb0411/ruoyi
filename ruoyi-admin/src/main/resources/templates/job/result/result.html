@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('匹配信息查询列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId" >
+                    <div class="select-list">
+                        <ul>
+                            <li style="width: 265px;height: 30px" >
+                                <label>学生姓名：</label>
+                                <input name="jmrSName" type="text">
+                                <!--<select  name="jmrSId" th:with="listthree=${@matchService.selectJmrJobMatchResultList(null)}" class="form-control m-b">
+                                    <option value="">所有</option>
+                                    <option th:each="myMatch : ${listthree}" th:value="${myMatch.jmrSId}" th:text="${myMatch.jmrStudent.sName}" ></option>
+                                </select>-->
+                            </li>
+                            <li style="width: 265px;height: 30px">
+                                <label>企业名称：</label>
+                                <input name="jmrCName" type="text">
+                               <!-- <select  name="jmrCId" th:with="listfore=${@matchService.selectJmrJobMatchResultList(null)}" class="form-control m-b">
+                                    <option value="">所有</option>
+                                    <option th:each="myMatch : ${listfore}" th:value="${myMatch.jmrCId}" th:text="${myMatch.jmrCompany.cName}" ></option>
+                                </select>-->
+                            </li>
+                            <li style="width: 265px;height: 30px">
+                                <label>招聘岗位：</label>
+                                <!--<input name="jmrJName" type="text">-->
+                                <select  name="jmrJName" th:with="listfive=${@matchService.selectJmrJobMatchResultList(null)}" class="form-control m-b">
+                                    <option value="">所有</option>
+                                    <option th:each="myMatch : ${listfive}" th:value="${myMatch.jmrJName}" th:text="${myMatch.jmrJName}" ></option>
+                                </select>
+                            </li>
+
+
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="job:result:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('job:result:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('job:result:remove')}]];
+        var prefix = ctx + "job/result";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "匹配信息查询",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'jmrId',
+                    title: '匹配岗位结果id',
+                    visible: false
+                },
+                {
+                    field: 'jmrSName',
+                    title: '学生姓名'
+                },
+                {
+                    field: 'jmrCName',
+                    title: '企业名称'
+                },
+                {
+                    field: 'jmrJName',
+                    title: '招聘岗位'
+                },
+
+                {
+                    field: 'jmrValue',
+                    title: '匹配数值'
+                },
+                    {
+                        title: '操作',
+                        align: 'center',
+                        formatter: function(value, row, index) {
+                            var actions = [];
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.jmrSId + '\')"><i class="fa fa-edit"></i>学生详情</a> ');
+
+                            return actions.join('');
+                        }
+                    }
+               ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

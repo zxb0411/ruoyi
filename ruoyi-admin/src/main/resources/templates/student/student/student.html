@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('存储学生信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId" th:if="${session.admin} eq 'yes'">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>学生姓名：</label>
+                                <input type="text" name="sName"/>
+                            </li>
+                            <li>
+                                <label>性别：</label>
+                                <select name="sSex" th:with="type=${@dict.getType('sys_user_sex')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>毕业院校：</label>
+                                <input type="text" name="sCollege"/>
+                            </li>
+                            <li>
+                                <label>毕业院校层次：</label>
+                                <select name="sCLevel" th:with="type=${@dict.getType('s_c_level')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>专业：</label>
+                                <select name="sProfession" class="form-control m-b" required th:with="profession=${@Student_JmrProfessionServiceImpl.selectJmrProfessionListShort(null)}">
+                                    <option value="">所有</option>
+                                    <option th:each="message:${profession}" th:value="${message.getpId()}" th:text="${message.getpSClass()}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>学历：</label>
+                                <select name="sEHistory" th:with="type=${@dict.getType('s_e_history')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>籍贯-省份：</label>
+                                <input type="text" name="sNProvince"/>
+                            </li>
+                            <li>
+                                <label>外语水平：</label>
+                                <select name="sFLanguage" th:with="type=${@dict.getType('s_f_language')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>期望薪资范围：</label>
+                                <select name="sSRange" th:with="type=${@dict.getType('s_s_range')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>期望岗位：</label>
+                                <select name="sEPosition" class="form-control m-b" required th:with="profession=${@JmrPositionServiceImpl.selectJmrPositionList(null)}">
+                                    <option value="">所有</option>
+                                    <option th:each="message:${profession}" th:value="${message.getpId()}" th:text="${message.getpName()}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>就业意向地：</label>
+                                <select name="sECity" th:with="type=${@dict.getType('s_e_city')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否就业：</label>
+                                <select name="sIfWork" th:with="type=${@dict.getType('sys_yes_no')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="student:student:add" th:if="${session.mess} eq 'yes'">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="student:student:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="student:student:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="student:student:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('student:student:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('student:student:remove')}]];
+        var sSexDatas = [[${@dict.getType('sys_user_sex')}]];
+        var sCLevelDatas = [[${@dict.getType('s_c_level')}]];
+        var sEHistoryDatas = [[${@dict.getType('s_e_history')}]];
+        var sFLanguageDatas = [[${@dict.getType('s_f_language')}]];
+        var sSRangeDatas = [[${@dict.getType('s_s_range')}]];
+        var sECityDatas = [[${@dict.getType('s_e_city')}]];
+        var sIfWorkDatas = [[${@dict.getType('s_if_work')}]];
+        var prefix = ctx + "student/student";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "存储学生信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'sId',
+                    title: '学生id',
+                    visible: false
+                },
+                {
+                    field: 'sName',
+                    title: '学生姓名'
+                },
+                {
+                    field: 'sIdCard',
+                    title: '学生身份证号'
+                },
+                {
+                    field: 'sSex',
+                    title: '性别',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sSexDatas, value);
+                    }
+                },
+                {
+                    field: 'sBirthday',
+                    title: '出生年月'
+                },
+                {
+                    field: 'sCollege',
+                    title: '毕业院校'
+                },
+                {
+                    field: 'sCLevel',
+                    title: '毕业院校层次',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sCLevelDatas, value);
+                    }
+                },
+                {
+                    field: 'professions.pSClass',
+                    title: '专业'
+                },
+                {
+                    field: 'sEHistory',
+                    title: '学历',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sEHistoryDatas, value);
+                    }
+                },
+                {
+                    field: 'sNProvince',
+                    title: '籍贯-省份'
+                },
+                {
+                    field: 'sNCity',
+                    title: '籍贯-地级市'
+                },
+                {
+                    field: 'sFLanguage',
+                    title: '外语水平',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sFLanguageDatas, value);
+                    }
+                },
+                {
+                    field: 'sSRange',
+                    title: '期望薪资范围',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sSRangeDatas, value);
+                    }
+                },
+                {
+                    field: 'position.pName',
+                    title: '期望岗位'
+                },
+                {
+                    field: 'sECity',
+                    title: '就业意向地',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sECityDatas, value);
+                    }
+                },
+                {
+                    field: 'sGTime',
+                    title: '毕业时间'
+                },
+                {
+                    field: 'sTelephone',
+                    title: '电话'
+                },
+                {
+                    field: 'sEmail',
+                    title: '邮箱'
+                },
+                {
+                    field: 'sSAttachment',
+                    title: '成绩单附件地址'
+                },
+                {
+                    field: 'sIfWork',
+                    title: '是否就业',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sIfWorkDatas, value);
+                    }
+                },
+                {
+                    field: 'sWCity',
+                    title: '就业地-地级市'
+                },
+                {
+                    field: 'sCompany',
+                    title: '就业的企业'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.sId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.sId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

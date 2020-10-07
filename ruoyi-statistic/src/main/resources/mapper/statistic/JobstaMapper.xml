@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.statistic.mapper.JobstaMapper">
+
+    <select id="countsex"   parameterType="integer"  resultType="int">
+        SELECT  count(j_sex) from jmr_job  WHERE j_sex=#{j_sex};
+    </select>
+    <select id="counthistory" parameterType="integer" resultType="int">
+        select count(j_e_history) from jmr_job where j_e_history=#{j_e_history}
+    </select>
+    <select id="countlevel" parameterType="integer" resultType="int">
+        select  count(j_c_level) from jmr_job where j_c_level=#{j_c_level}
+    </select>
+    <select id="countrange" parameterType="integer" resultType="int">
+        select count(j_s_range) from jmr_job where j_s_range=#{j_s_range}
+    </select>
+    <select id="countremark" parameterType="String" resultType="int">
+        select  count(j_remark) from jmr_job where j_remark=#{j_remark}
+    </select>
+
+</mapper>

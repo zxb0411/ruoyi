@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('企业信息查询列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+
+                            <li>
+                                <label>企业名称：</label>
+                                <input type="text" name="cName"/>
+                            </li>
+
+                            <li>
+                                <label style="width: 140px">统一社会信用代码：</label>
+                                <input type="text" name="cSCode"/>
+                            </li>
+                            <li>
+                                <label>联系人：</label>
+                                <input type="text" name="cContact"/>
+                            </li>
+                            <li>
+                                <label>联系电话：</label>
+                                <input type="text" name="cTelephone"/>
+                            </li>
+
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="job:company:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('job:company:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('job:company:remove')}]];
+        var prefix = ctx + "job/company";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "企业信息查询",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'cId',
+                    title: '企业id',
+                    visible: false
+                },
+                {
+                    field: 'cName',
+                    title: '企业名称'
+                },
+
+                {
+                    field: 'cSCode',
+                    title: '统一社会信用代码'
+                },
+                {
+                    field: 'cDescription',
+                    title: '企业简介',
+                    formatter: function (value,row,index) {
+                        return $.table.tooltip(value,5);
+                    }
+                },
+                {
+                    field: 'cContact',
+                    title: '联系人'
+                },
+                {
+                    field: 'cTelephone',
+                    title: '联系电话'
+                },
+                {
+                    field: 'cEmail',
+                    title: '邮箱'
+                },
+               ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

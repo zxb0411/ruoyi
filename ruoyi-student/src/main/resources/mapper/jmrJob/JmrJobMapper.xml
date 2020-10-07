@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.student.mapper.JmrJobMapper">
+
+    <resultMap id="jmrJobResult" type="JmrJob">
+        <result property="jId" column="j_id" />
+        <result property="jPoId" column="j_po_id"/>
+        <result property="jSex" column="j_sex"/>
+        <result property="jEHistory" column="j_e_history"/>
+        <result property="jCLevel" column="j_c_level"/>
+        <result property="jFLanguage" column="j_f_language"/>
+        <result property="jPrId" column="j_pr_id"/>
+        <result property="jSRange" column="j_s_range"/>
+        <result property="jECity" column="j_e_city"/>
+        <result property="jCId" column="j_c_id"/>
+
+        <collection property="company" javaType="jmrCompany">
+            <result property="cName" column="c_name"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="selectList" resultMap="jmrJobResult">
+        SELECT j_id, j_po_id, j_sex, j_e_history, j_c_level, j_f_language, j_pr_id, j_s_range, j_e_city, j_c_id,c_name FROM jmr_job left join jmr_company on j_c_id=jmr_company.c_id
+    </select>
+</mapper>

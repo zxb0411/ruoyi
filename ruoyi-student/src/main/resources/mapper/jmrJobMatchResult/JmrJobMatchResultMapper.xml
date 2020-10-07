@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.student.mapper.JmrJobMatchResultMapper">
+    
+    <resultMap type="JmrJobMatchResult" id="JmrJobMatchResultResult">
+        <result property="jmrId"    column="jmr_id"    />
+        <result property="jmrSId"    column="jmr_s_id"    />
+        <result property="jmrCId"    column="jmr_c_id"    />
+        <result property="jmrJId"    column="jmr_j_id"    />
+        <result property="jmrBId"    column="jmr_b_id"    />
+        <result property="jmrValue"    column="jmr_value"    />
+
+        <collection property="jmrStudents" javaType="JmrStudent">
+            <result property="sName" column="s_name"/>
+        </collection>
+
+        <collection property="jmrCompanySave" javaType="JmrCompany">
+            <result property="cName" column="c_name"/>
+        </collection>
+
+        <collection property="position" javaType="JmrPosition">
+            <result property="pName" column="p_name"/>
+        </collection>
+
+    </resultMap>
+
+    <sql id="selectJmrJobMatchResultVo">
+        select jmr_id, jmr_s_id, jmr_c_id, jmr_j_id, jmr_b_id, jmr_value, jmr_student.s_name, jmr_company.c_name, jmr_position.p_name
+         from jmr_job_match_result
+         left join jmr_student on jmr_job_match_result.jmr_s_id=jmr_student.s_id
+         left join jmr_company on jmr_job_match_result.jmr_c_id=jmr_company.c_id
+         left join jmr_position on jmr_job_match_result.jmr_j_id=jmr_position.p_id
+    </sql>
+
+    <select id="selectJmrJobMatchResultList" parameterType="JmrJobMatchResult" resultMap="JmrJobMatchResultResult">
+        <include refid="selectJmrJobMatchResultVo"/>
+        <where>  
+            <if test="jmrSId != null "> and jmr_s_id = #{jmrSId}</if>
+            <if test="jmrCId != null "> and jmr_c_id = #{jmrCId}</if>
+            <if test="jmrJId != null "> and jmr_j_id = #{jmrJId}</if>
+            <if test="jmrBId != null "> and jmr_b_id = #{jmrBId}</if>
+            <if test="jmrValue != null "> and jmr_value = #{jmrValue}</if>
+        </where>
+    </select>
+    
+    <select id="selectJmrJobMatchResultById" parameterType="Long" resultMap="JmrJobMatchResultResult">
+        <include refid="selectJmrJobMatchResultVo"/>
+        where jmr_id = #{jmrId}
+    </select>
+        
+    <insert id="insertJmrJobMatchResult" parameterType="JmrJobMatchResult" useGeneratedKeys="true" keyProperty="jmrId">
+        insert into jmr_job_match_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jmrSId != null">jmr_s_id,</if>
+            <if test="jmrCId != null">jmr_c_id,</if>
+            <if test="jmrJId != null">jmr_j_id,</if>
+            <if test="jmrBId != null">jmr_b_id,</if>
+            <if test="jmrValue != null">jmr_value,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jmrSId != null">#{jmrSId},</if>
+            <if test="jmrCId != null">#{jmrCId},</if>
+            <if test="jmrJId != null">#{jmrJId},</if>
+            <if test="jmrBId != null">#{jmrBId},</if>
+            <if test="jmrValue != null">#{jmrValue},</if>
+         </trim>
+    </insert>
+
+    <delete id="deleteJmrJobMatchResultBySId" parameterType="Long">
+        delete from jmr_job_match_result where jmr_s_id = #{jmrSId}
+    </delete>
+
+    <delete id="deleteJmrJobMatchResult">
+        delete from jmr_job_match_result where 1=1
+    </delete>
+
+</mapper>

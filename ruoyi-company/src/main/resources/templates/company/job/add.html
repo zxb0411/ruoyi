@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增企业岗位管理3.0')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-job-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">招聘岗位：</label>
+                <div class="col-sm-8">
+                    <select name="jPoId" class="form-control m-b" required th:with="aa=${@Company_JmrPositionServiceImplCompany.selectJmrPositionList(null)}">
+                        <option value="">所有</option>
+                        <option th:each="message:${aa}" th:value="${message.getpId()}" th:text="${message.getpName()}"></option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">性别要求：</label>
+                <div class="col-sm-8">
+                    <select name="jSex" class="form-control m-b" th:with="type=${@dict.getType('sex_company')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">学历要求：</label>
+                <div class="col-sm-8">
+                    <select name="jEHistory" class="form-control m-b" th:with="type=${@dict.getType('s_e_history')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">招聘院校层次：</label>
+                <div class="col-sm-8">
+                    <select name="jCLevel" class="form-control m-b" th:with="type=${@dict.getType('s_c_level')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">外语水平：</label>
+                <div class="col-sm-8">
+                    <select name="jFLanguage" class="form-control m-b" th:with="type=${@dict.getType('s_f_language')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">专业要求：</label>
+                <div class="col-sm-8">
+                    <select name="jPrId" class="form-control m-b" required th:with="profession=${@JmrProfessionServiceImpl.selectJmrProfessionList()}">
+                        <option value="">所有</option>
+                        <option th:each="pro:${profession}" th:value="${pro.getId()}" th:text="${pro.getPsclass()}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">薪资范围：</label>
+                <div class="col-sm-8">
+                        <select name="jSRange" class="form-control m-b`" th:with="type=${@dict.getType('s_s_range')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">就业意向地：</label>
+                <div class="col-sm-8">
+                    <select name="jECity" class="form-control m-b" th:with="type=${@dict.getType('s_e_city')}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">岗位要求：</label>
+                <div class="col-sm-8">
+                    <textarea name="jPRequire" class="form-control" required></textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">福利待遇：</label>
+                <div class="col-sm-8">
+                    <input name="jWelfare" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">需求人数：</label>
+                <div class="col-sm-8">
+                    <input name="jNeedNumber" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">备注：</label>
+                <div class="col-sm-8">
+                    <input name="jRemark" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">开始时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="jBegin" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">过期时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="jExpire" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">企业：</label>
+                <div class="col-sm-8" th:if="${session.isComAcount} eq 'no'">
+                    <select name="jCId" class="form-control m-b" th:with="type=${@JmrCompanyService.selectJmrCompanyList(null)}" required>
+                        <option th:each="dict : ${type}" th:text="${dict.cName}" th:value="${dict.cId}"></option>
+                    </select>
+                </div>
+                <div class="col-sm-8" th:if="${session.isComAcount} eq 'yes'">
+                    <input hidden="hidden" name="jCId" class="form-control" th:value="${session.company.cId}"   type="hidden" required>
+                    <input readonly="readonly" class="form-control" th:value="${session.company.cName}"   type="text" required>
+<!--                    <select name="jCId" class="form-control m-b" th:with="type=${@JmrCompanyService.selectJmrCompanyList(null)}" required>-->
+<!--                        <option th:each="dict : ${type}" th:text="${dict.cName}" th:value="${dict.cId}"></option>-->
+<!--                    </select>-->
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "company/job"
+        $("#form-job-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-job-add').serialize());
+            }
+        }
+
+        $("input[name='jBegin']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='jExpire']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

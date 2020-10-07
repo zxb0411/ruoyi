@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/com.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="dsty" id="main1"></div>
+
+
+<input type="hidden" id="sex0" th:value="${sex0}">
+<input type="hidden" id="sex1" th:value="${sex1}">
+<input type="hidden" id="profession0" th:value="${profession0}">
+<input type="hidden" id="profession1" th:value="${profession1}">
+<input type="hidden" id="history0" th:value="${history0}">
+<input type="hidden" id="history1" th:value="${history1}">
+<input type="hidden" id="level0" th:value="${level0}">
+<input type="hidden" id="level1" th:value="${level1}">
+<input type="hidden" id="range0" th:value="${range0}">
+<input type="hidden" id="range1" th:value="${range1}">
+<input type="hidden" id="position0" th:value="${position0}">
+<input type="hidden" id="position1" th:value="${position1}">
+<input type="hidden" id="city0" th:value="${city0}">
+<input type="hidden" id="city1" th:value="${city1}">
+
+</body>
+<script th:src="@{/js/echarts.js}"></script>
+<script th:src="@{/js/echarts.min.js}"></script>
+<script th:src="@{/js/com.js}"></script>
+</html>

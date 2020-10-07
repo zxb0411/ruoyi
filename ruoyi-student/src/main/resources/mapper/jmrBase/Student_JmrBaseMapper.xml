@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.student.mapper.Student_JmrBaseMapper">
+    
+    <resultMap type="Student_JmrBase" id="JmrBaseResult">
+        <result property="jmrBId"    column="jmr_b_id"    />
+        <result property="jmrSexValue"    column="jmr_sex_value"    />
+        <result property="jmrLevelValue"    column="jmr_level_value"    />
+        <result property="jmrProfessionValue"    column="jmr_profession_value"    />
+        <result property="jmrHistoryValue"    column="jmr_history_value"    />
+        <result property="jmrLanguageValue"    column="jmr_language_value"    />
+        <result property="jmrRangeValue"    column="jmr_range_value"    />
+        <result property="jmrPositionValue"    column="jmr_position_value"    />
+        <result property="jmrCityValue"    column="jmr_city_value"    />
+
+    </resultMap>
+
+    <sql id="selectJmrBaseVo">
+        select jmr_b_id, jmr_sex_value, jmr_level_value, jmr_profession_value, jmr_history_value, jmr_language_value, jmr_range_value, jmr_position_value, jmr_city_value from jmr_base
+    </sql>
+
+    <select id="selectJmrBaseList" parameterType="Student_JmrBase" resultMap="JmrBaseResult">
+        <include refid="selectJmrBaseVo"/>
+        <where>  
+            <if test="jmrSexValue != null "> and jmr_sex_value = #{jmrSexValue}</if>
+            <if test="jmrLevelValue != null "> and jmr_level_value = #{jmrLevelValue}</if>
+            <if test="jmrProfessionValue != null "> and jmr_profession_value = #{jmrProfessionValue}</if>
+            <if test="jmrHistoryValue != null "> and jmr_history_value = #{jmrHistoryValue}</if>
+            <if test="jmrLanguageValue != null "> and jmr_language_value = #{jmrLanguageValue}</if>
+            <if test="jmrRangeValue != null "> and jmr_range_value = #{jmrRangeValue}</if>
+            <if test="jmrPositionValue != null "> and jmr_position_value = #{jmrPositionValue}</if>
+            <if test="jmrCityValue != null "> and jmr_city_value = #{jmrCityValue}</if>
+        </where>
+    </select>
+    
+    <select id="selectJmrBaseById" parameterType="Integer" resultMap="JmrBaseResult">
+        <include refid="selectJmrBaseVo"/>
+        where jmr_b_id = #{jmrBId}
+    </select>
+        
+    <insert id="insertJmrBase" parameterType="Student_JmrBase" useGeneratedKeys="true" keyProperty="jmrBId">
+        insert into jmr_base
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jmrSexValue != null">jmr_sex_value,</if>
+            <if test="jmrLevelValue != null">jmr_level_value,</if>
+            <if test="jmrProfessionValue != null">jmr_profession_value,</if>
+            <if test="jmrHistoryValue != null">jmr_history_value,</if>
+            <if test="jmrLanguageValue != null">jmr_language_value,</if>
+            <if test="jmrRangeValue != null">jmr_range_value,</if>
+            <if test="jmrPositionValue != null">jmr_position_value,</if>
+            <if test="jmrCityValue != null">jmr_city_value,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jmrSexValue != null">#{jmrSexValue},</if>
+            <if test="jmrLevelValue != null">#{jmrLevelValue},</if>
+            <if test="jmrProfessionValue != null">#{jmrProfessionValue},</if>
+            <if test="jmrHistoryValue != null">#{jmrHistoryValue},</if>
+            <if test="jmrLanguageValue != null">#{jmrLanguageValue},</if>
+            <if test="jmrRangeValue != null">#{jmrRangeValue},</if>
+            <if test="jmrPositionValue != null">#{jmrPositionValue},</if>
+            <if test="jmrCityValue != null">#{jmrCityValue},</if>
+         </trim>
+    </insert>
+
+</mapper>

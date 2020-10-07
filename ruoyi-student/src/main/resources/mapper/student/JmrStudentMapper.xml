@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.student.mapper.JmrStudentMapper">
+    
+    <resultMap type="JmrStudent" id="JmrStudentResult">
+        <result property="sId"    column="s_id"    />
+        <result property="sName"    column="s_name"    />
+        <result property="sIdCard"    column="s_id_card"    />
+        <result property="sSex"    column="s_sex"    />
+        <result property="sBirthday"    column="s_birthday"    />
+        <result property="sCollege"    column="s_college"    />
+        <result property="sCLevel"    column="s_c_level"    />
+        <result property="sProfession"    column="s_profession"    />
+        <result property="sEHistory"    column="s_e_history"    />
+        <result property="sNProvince"    column="s_n_province"    />
+        <result property="sNCity"    column="s_n_city"    />
+        <result property="sFLanguage"    column="s_f_language"    />
+        <result property="sSRange"    column="s_s_range"    />
+        <result property="sEPosition"    column="s_e_position"    />
+        <result property="sECity"    column="s_e_city"    />
+        <result property="sGTime"    column="s_g_time"    />
+        <result property="sTelephone"    column="s_telephone"    />
+        <result property="sEmail"    column="s_email"    />
+        <result property="sSAttachment"    column="s_s_attachment"    />
+        <result property="sIfWork"    column="s_if_work"    />
+        <result property="sWCity"    column="s_w_city"    />
+        <result property="sCompany"    column="s_company"    />
+
+        <collection property="position" javaType="JmrPosition">
+            <result property="pName" column="p_name"/>
+        </collection>
+
+        <collection property="professions" javaType="JmrProfession">
+            <result property="pId" column="p_id"/>
+            <result property="pSClass" column="p_s_class"/>
+        </collection>
+    </resultMap>
+
+    <sql id="selectJmrStudentVo">
+        select s_id, s_name, s_id_card, s_sex, s_birthday, s_college, s_c_level, s_profession, s_e_history, s_n_province, s_n_city, s_f_language, s_s_range, s_e_position, s_e_city, s_g_time, s_telephone, s_email, s_s_attachment, s_if_work, s_w_city, s_company, jmr_profession.p_id, p_s_class, p_name
+         from jmr_student
+         left join jmr_profession on jmr_profession.p_id=s_profession
+         left join jmr_position on jmr_position.p_id=s_e_position
+    </sql>
+
+    <select id="selectJmrStudentList" parameterType="JmrStudent" resultMap="JmrStudentResult">
+        <include refid="selectJmrStudentVo"/>
+        <where>  
+            <if test="sName != null  and sName != ''"> and s_name like concat('%', #{sName}, '%')</if>
+            <if test="sIdCard != null  and sIdCard != ''"> and s_id_card = #{sIdCard}</if>
+            <if test="sSex != null "> and s_sex = #{sSex}</if>
+            <if test="sBirthday != null  and sBirthday != ''"> and s_birthday = #{sBirthday}</if>
+            <if test="sCollege != null  and sCollege != ''"> and s_college = #{sCollege}</if>
+            <if test="sCLevel != null "> and s_c_level = #{sCLevel}</if>
+            <if test="sProfession != null "> and s_profession = #{sProfession}</if>
+            <if test="sEHistory != null "> and s_e_history = #{sEHistory}</if>
+            <if test="sNProvince != null  and sNProvince != ''"> and s_n_province = #{sNProvince}</if>
+            <if test="sNCity != null  and sNCity != ''"> and s_n_city = #{sNCity}</if>
+            <if test="sFLanguage != null "> and s_f_language = #{sFLanguage}</if>
+            <if test="sSRange != null "> and s_s_range = #{sSRange}</if>
+            <if test="sEPosition != null "> and s_e_position = #{sEPosition}</if>
+            <if test="sECity != null "> and s_e_city = #{sECity}</if>
+            <if test="sGTime != null  and sGTime != ''"> and s_g_time = #{sGTime}</if>
+            <if test="sTelephone != null  and sTelephone != ''"> and s_telephone = #{sTelephone}</if>
+            <if test="sEmail != null  and sEmail != ''"> and s_email = #{sEmail}</if>
+            <if test="sSAttachment != null  and sSAttachment != ''"> and s_s_attachment = #{sSAttachment}</if>
+            <if test="sIfWork != null "> and s_if_work = #{sIfWork}</if>
+            <if test="sWCity != null  and sWCity != ''"> and s_w_city = #{sWCity}</if>
+            <if test="sCompany != null  and sCompany != ''"> and s_company = #{sCompany}</if>
+        </where>
+    </select>
+    
+    <select id="selectJmrStudentById" parameterType="Long" resultMap="JmrStudentResult">
+        <include refid="selectJmrStudentVo"/>
+        where s_id = #{sId}
+    </select>
+
+<!--  根据电话号码查询  -->
+    <select id="selectJmrStudentByPhone" parameterType="String" resultMap="JmrStudentResult">
+        <include refid="selectJmrStudentVo"/>
+        where s_telephone = #{sTelephone}
+    </select>
+        
+    <insert id="insertJmrStudent" parameterType="JmrStudent" useGeneratedKeys="true" keyProperty="sId">
+        insert into jmr_student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sName != null and sName != ''">s_name,</if>
+            <if test="sIdCard != null and sIdCard != ''">s_id_card,</if>
+            <if test="sSex != null">s_sex,</if>
+            <if test="sBirthday != null and sBirthday != ''">s_birthday,</if>
+            <if test="sCollege != null and sCollege != ''">s_college,</if>
+            <if test="sCLevel != null">s_c_level,</if>
+            <if test="sProfession != null">s_profession,</if>
+            <if test="sEHistory != null">s_e_history,</if>
+            <if test="sNProvince != null and sNProvince != ''">s_n_province,</if>
+            <if test="sNCity != null and sNCity != ''">s_n_city,</if>
+            <if test="sFLanguage != null">s_f_language,</if>
+            <if test="sSRange != null">s_s_range,</if>
+            <if test="sEPosition != null">s_e_position,</if>
+            <if test="sECity != null">s_e_city,</if>
+            <if test="sGTime != null and sGTime != ''">s_g_time,</if>
+            <if test="sTelephone != null and sTelephone != ''">s_telephone,</if>
+            <if test="sEmail != null and sEmail != ''">s_email,</if>
+            <if test="sSAttachment != null and sSAttachment != ''">s_s_attachment,</if>
+            <if test="sIfWork != null">s_if_work,</if>
+            <if test="sWCity != null and sWCity != ''">s_w_city,</if>
+            <if test="sCompany != null and sCompany != ''">s_company,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sName != null and sName != ''">#{sName},</if>
+            <if test="sIdCard != null and sIdCard != ''">#{sIdCard},</if>
+            <if test="sSex != null">#{sSex},</if>
+            <if test="sBirthday != null and sBirthday != ''">#{sBirthday},</if>
+            <if test="sCollege != null and sCollege != ''">#{sCollege},</if>
+            <if test="sCLevel != null">#{sCLevel},</if>
+            <if test="sProfession != null">#{sProfession},</if>
+            <if test="sEHistory != null">#{sEHistory},</if>
+            <if test="sNProvince != null and sNProvince != ''">#{sNProvince},</if>
+            <if test="sNCity != null and sNCity != ''">#{sNCity},</if>
+            <if test="sFLanguage != null">#{sFLanguage},</if>
+            <if test="sSRange != null">#{sSRange},</if>
+            <if test="sEPosition != null">#{sEPosition},</if>
+            <if test="sECity != null">#{sECity},</if>
+            <if test="sGTime != null and sGTime != ''">#{sGTime},</if>
+            <if test="sTelephone != null and sTelephone != ''">#{sTelephone},</if>
+            <if test="sEmail != null and sEmail != ''">#{sEmail},</if>
+            <if test="sSAttachment != null and sSAttachment != ''">#{sSAttachment},</if>
+            <if test="sIfWork != null">#{sIfWork},</if>
+            <if test="sWCity != null and sWCity != ''">#{sWCity},</if>
+            <if test="sCompany != null and sCompany != ''">#{sCompany},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJmrStudent" parameterType="JmrStudent">
+        update jmr_student
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sName != null and sName != ''">s_name = #{sName},</if>
+            <if test="sIdCard != null and sIdCard != ''">s_id_card = #{sIdCard},</if>
+            <if test="sSex != null">s_sex = #{sSex},</if>
+            <if test="sBirthday != null and sBirthday != ''">s_birthday = #{sBirthday},</if>
+            <if test="sCollege != null and sCollege != ''">s_college = #{sCollege},</if>
+            <if test="sCLevel != null">s_c_level = #{sCLevel},</if>
+            <if test="sProfession != null">s_profession = #{sProfession},</if>
+            <if test="sEHistory != null">s_e_history = #{sEHistory},</if>
+            <if test="sNProvince != null and sNProvince != ''">s_n_province = #{sNProvince},</if>
+            <if test="sNCity != null and sNCity != ''">s_n_city = #{sNCity},</if>
+            <if test="sFLanguage != null">s_f_language = #{sFLanguage},</if>
+            <if test="sSRange != null">s_s_range = #{sSRange},</if>
+            <if test="sEPosition != null">s_e_position = #{sEPosition},</if>
+            <if test="sECity != null">s_e_city = #{sECity},</if>
+            <if test="sGTime != null and sGTime != ''">s_g_time = #{sGTime},</if>
+            <if test="sTelephone != null and sTelephone != ''">s_telephone = #{sTelephone},</if>
+            <if test="sEmail != null and sEmail != ''">s_email = #{sEmail},</if>
+            <if test="sSAttachment != null and sSAttachment != ''">s_s_attachment = #{sSAttachment},</if>
+            <if test="sIfWork != null">s_if_work = #{sIfWork},</if>
+            <if test="sWCity != null and sWCity != ''">s_w_city = #{sWCity},</if>
+            <if test="sCompany != null and sCompany != ''">s_company = #{sCompany},</if>
+        </trim>
+        where s_id = #{sId}
+    </update>
+
+    <delete id="deleteJmrStudentById" parameterType="Long">
+        delete from jmr_student where s_id = #{sId}
+    </delete>
+
+    <delete id="deleteJmrStudentByIds" parameterType="String">
+        delete from jmr_student where s_id in 
+        <foreach item="sId" collection="array" open="(" separator="," close=")">
+            #{sId}
+        </foreach>
+    </delete>
+</mapper>

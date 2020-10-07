@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.company.mapper.Company_Jmr_StudentResumeMapper">
+
+        <resultMap type="Company__Jmr_StudentResume" id="JmrResumeResult">
+            <result property="rId"    column="r_id"    />
+            <result property="rMCourse"    column="r_m_course"    />
+            <result property="rSkill"    column="r_skill"    />
+            <result property="rSCertificate"    column="r_s_certificate"    />
+            <result property="rHonor"    column="r_honor"    />
+            <result property="rCareer"    column="r_career"    />
+            <result property="rPExperience"    column="r_p_experience"    />
+            <result property="rSEvaluate"    column="r_s_evaluate"    />
+            <result property="rRemark"    column="r_remark"    />
+            <result property="rSId"    column="r_s_id"    />
+        </resultMap>
+
+        <sql id="selectJmrResumeVo">
+        select r_id, r_m_course, r_skill, r_s_certificate, r_honor, r_career, r_p_experience, r_s_evaluate, r_remark, r_s_id from jmr_resume
+        </sql>
+
+        <select id="findList" parameterType="Company__Jmr_StudentResume" resultMap="JmrResumeResult">
+            <include refid="selectJmrResumeVo"/>
+            <where>
+                <if test="rMCourse != null  and rMCourse != ''"> and r_m_course = #{rMCourse}</if>
+                <if test="rSkill != null  and rSkill != ''"> and r_skill = #{rSkill}</if>
+                <if test="rSCertificate != null  and rSCertificate != ''"> and r_s_certificate = #{rSCertificate}</if>
+                <if test="rHonor != null  and rHonor != ''"> and r_honor = #{rHonor}</if>
+                <if test="rCareer != null  and rCareer != ''"> and r_career = #{rCareer}</if>
+                <if test="rPExperience != null  and rPExperience != ''"> and r_p_experience = #{rPExperience}</if>
+                <if test="rSEvaluate != null  and rSEvaluate != ''"> and r_s_evaluate = #{rSEvaluate}</if>
+                <if test="rRemark != null  and rRemark != ''"> and r_remark = #{rRemark}</if>
+                <if test="rSId != null "> and r_s_id = #{rSId}</if>
+            </where>
+        </select>
+
+        <select id="selectJmrResumeById" parameterType="Integer" resultMap="JmrResumeResult">
+            <include refid="selectJmrResumeVo"/>
+            where r_id = #{rId}
+        </select>
+
+
+
+
+
+        <delete id="deleteJmrResumeById" parameterType="Integer">
+                 delete from jmr_resume where r_id = #{rId}
+        </delete>
+
+
+
+
+</mapper>
